@@ -1,0 +1,2 @@
+{"id":"V1","left":"v1","right":"v2","metric":"cover","maps":["ridge"],"roles":["support"]}
+{"id":"V2","left":"v2","right":"v3","metric":"sync","maps":["canal"],"roles":["jungle"]}

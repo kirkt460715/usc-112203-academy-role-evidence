@@ -1,0 +1,26 @@
+{
+  "players": {
+    "rows": 38,
+    "sha256": "0d49eeb00c85294c25f8d07fb47a5135c0a21a29bc9df6e3ca6db5e807768422"
+  },
+  "games": {
+    "rows": 144,
+    "sha256": "3f4fe327d669f4cda365ddcb54d8ce8929f9a63c6570ca169a2b1ecff5db53a3"
+  },
+  "drills": {
+    "rows": 1440,
+    "sha256": "93a04c11b84a0c606079c44c4d4765d8505cb987e9b6016a93e24fff18a36c82"
+  },
+  "compatibility": {
+    "rows": 2,
+    "sha256": "da2141eb2ed94a4362ec5ae390b6e29b1a7453dedd441096ce7a0857d34eef1d"
+  },
+  "rounds": {
+    "rows": 3,
+    "sha256": "eae6e0b0fba0e6fc098074de7ef0fa89f4f7f26b26d4494bc75736c5dac02c2c"
+  },
+  "seats": {
+    "rows": 3,
+    "sha256": "1a332d94c11aa4c1f82aef87ad9933aff0d28ceec7c2e88ead3d6ab6201c8814"
+  }
+}
