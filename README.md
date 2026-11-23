@@ -16,3 +16,39 @@ records 保存可离线使用的合成业务记录。每行一个 UTF-8 JSON 对
 ## 核对资料
 
 运行环境为 Python 3.11，使用标准库，无需下载依赖。用 `python3 -m unittest discover -s tests -v` 核对发行资料的完整性与约定的输入关系。
+
+## 晋级证据系统（coaching 包）
+
+`coaching/` 在上述资料上实现可解释的晋级证据与试训安排，全部使用标准库。
+
+| 模块 | 职责 |
+| --- | --- |
+| `records.py` | 装载 JSONL、核对 catalog 摘要/行数/外键/阵容与练习一致性。 |
+| `model.py` | 按 `(岗位, 版本, 地图)` 分层的 logistic 加性模型：个人岗位效应与场次情境（整队/对手）效应分离；二部共现图 + 同场同岗对手边给出可辨认连通分量。带岭正则与步长减半的 IRLS 求解。 |
+| `evidence.py` | 选手-岗位证据档案；只按 `compatibility.jsonl` 显式登记做跨版本桥接；逆方差合并、充分性门槛与不可辨认对照标注。 |
+| `rounds.py` | 按 `available_week` 切片的决策时点回看；晋级/席位备选/再观察分流；后续窗口只在可比岗位上检验方向。 |
+| `trials.py` | 十人互异、同时段互斥、岗位登记与已承诺席位约束下的试训组合安排；赛前换版本的结论重判与席位影响单列。 |
+| `report.py` | 按人按岗位追溯比赛片段、未知对照与下轮安排的 JSON/Markdown 报告。 |
+
+关键纪律：
+
+- 证据归属到 `(选手, 岗位)`；换岗位产生独立证据，指标（cover/sync）不相通，绝不直接拼接。
+- 跨版本只沿兼容登记的链借用证据，未登记组合只作历史参照。
+- 晚到赛况在其 `available_week` 之后才进入结论；相对次序不可辨认的选手对显式报告原因。
+- 证据充分但受每岗席位限制的资格标为"备选"，与证据不足、必须再观察的资格分开处理。
+
+### 运行
+
+```bash
+# 资料完整性与输入关系校验
+python3 -I run_analysis.py verify --records records
+
+# 生成三个轮次的证据与试训安排（output/evidence_report.{json,md}）
+python3 -I run_analysis.py analyze --records records --out output
+
+# 全部测试（发行资料测试 + 系统性质测试）
+python3 -m unittest discover -s tests -v
+```
+
+`-I` 隔离模式忽略环境变量与用户站点包；不受信资料只以路径参数读取，装载时先校验后使用。
+
